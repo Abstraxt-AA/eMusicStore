@@ -1,0 +1,66 @@
+package org.example.emusicstore.dao;
+
+import org.example.emusicstore.model.Product;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+public class ProductDao {
+
+    private List<Product> productList;
+
+    public List<Product> getProductList() {
+
+        Product product = new Product();
+        product.setProductId("Guitar1");
+        product.setProductName("Guitar1");
+        product.setProductCategory("Instrument");
+        product.setProductDescription("This is a Fender Strat guitar");
+        product.setProductPrice(1200);
+        product.setProductCondition("New");
+        product.setProductStatus("Active");
+        product.setUnitsInStock(11);
+        product.setProductManufacturer("Fender");
+
+        Product product1 = new Product();
+        product1.setProductId("Record1");
+        product1.setProductName("Record1");
+        product1.setProductCategory("Record");
+            product1.setProductDescription("This is an awesome mix of 20th century!");
+        product1.setProductPrice(25);
+        product1.setProductCondition("New");
+        product1.setProductStatus("Active");
+        product1.setUnitsInStock(51);
+        product1.setProductManufacturer("EMI");
+
+        Product product2 = new Product();
+        product2.setProductId("Speaker1");
+        product2.setProductName("Speaker1");
+        product2.setProductCategory("Accessory");
+        product2.setProductDescription("This is a Polk Shelf Speaker!");
+        product2.setProductPrice(355);
+        product2.setProductCondition("New");
+        product2.setProductStatus("Active");
+        product2.setUnitsInStock(9);
+        product2.setProductManufacturer("Polk");
+
+        productList = new ArrayList<>();
+        productList.add(product);
+        productList.add(product1);
+        productList.add(product2);
+
+        return productList;
+    }
+
+    public Product getProductById(String productId) throws IOException {
+
+        for (Product product : getProductList()) {
+            if (product.getProductId().equals(productId)) {
+                return product;
+            }
+        }
+
+        throw new IOException("No product found");
+    }
+}

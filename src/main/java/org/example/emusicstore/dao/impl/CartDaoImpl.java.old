@@ -1,0 +1,55 @@
+package org.example.emusicstore.dao.impl;
+
+import org.example.emusicstore.dao.CartDao;
+import org.example.emusicstore.model.Cart;
+import org.springframework.stereotype.Repository;
+
+import java.util.HashMap;
+import java.util.Map;
+
+@Repository
+public class CartDaoImpl implements CartDao {
+
+    private final Map<String, Cart> listOfCarts;
+
+    public CartDaoImpl() {
+        listOfCarts = new HashMap<>();
+    }
+
+    @Override
+    public Cart create(Cart cart) {
+        if (listOfCarts.containsKey(cart.getCartId())) {
+            throw new IllegalArgumentException(String.format("Cannot create a cart." +
+                    "A cart with the given ID (%s) already exists.", cart.getCartId()));
+        }
+
+        listOfCarts.put(cart.getCartId(), cart);
+
+        return cart;
+    }
+
+    @Override
+    public Cart read(String cartId) {
+        return listOfCarts.get(cartId);
+    }
+
+    @Override
+    public void update(String cartId, Cart cart) {
+        if (!listOfCarts.containsKey(cartId)) {
+            throw new IllegalArgumentException(String.format("Cannot update cart." +
+                    "A cart with the given ID (%s) does not exist.", cartId));
+        }
+
+        listOfCarts.put(cartId, cart);
+    }
+
+    @Override
+    public void delete(String cartId) {
+        if (!listOfCarts.containsKey(cartId)) {
+            throw new IllegalArgumentException(String.format("Cannot delete cart." +
+                    "A cart with the given ID (%s) does not exist.", cartId));
+        }
+
+        listOfCarts.remove(cartId);
+    }
+}
